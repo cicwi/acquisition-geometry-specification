@@ -13,7 +13,7 @@ dimension = 3
 [volume]
 origin = [0.0, 0.0, 0.0]
 lengths = [10.0, 10.0, 10.0]
-voxels = [100, 100, 100]
+shape = [100, 100, 100]
 
 [parameters]
 source-distance = 5.0
@@ -81,7 +81,7 @@ After the header, the *volume* table is given. We make a
 The table has *three* entries:
 - `origin`: an array of `D` floating point numbers. The left-most point of the volume (in each axis) in physical coordinates.
 - `lengths`: an array of `D` floating point numbers. The size of the volume in physical coordinates.
-- `voxels`: an array of `D` integers. The intended number of voxels to reconstruct, given along each axis.
+- `shape`: an array of `D` integers. The number of discretization points for each axis.
 
 A valid volume definition is e.g.:
 
@@ -89,10 +89,10 @@ A valid volume definition is e.g.:
 [volume]
 origin = [0.0, 0.0, 0.0]
 lengths = [10.0, 10.0, 10.0]
-voxels = [100, 100, 100]
+shape = [100, 100, 100]
 ```
 
-This defines a volume of physical size `10 x 10 x 10`, in the *positive octant* in physical coordinates, that consists of `100^3` voxels..
+This defines a volume of physical size `10 x 10 x 10`, in the *positive octant* in physical coordinates, that consists of `100^3` discretization points.
 
 ## Parameters
 
