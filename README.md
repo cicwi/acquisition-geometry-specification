@@ -7,7 +7,7 @@ We specify acquisition geometries using a [TOML](https://github.com/toml-lang/to
 
 ```toml
 specifies = "geometry"
-kind = "parallel"
+type = "parallel"
 dimension = 3
 
 [volume]
@@ -33,7 +33,7 @@ The geometry specs have the following structure: first there is a *header*, then
     specifies = "geometry"
     ```
 
-- In the second entry the *kind* (or *class*) of the geometry as:
+- In the second entry the *type* (or *class*) of the geometry as:
 
     ```toml
     class = "name"
@@ -60,7 +60,7 @@ For 3D parallel beam:
 
 ```toml
 specifies = "geometry"
-kind = "parallel"
+type = "parallel"
 dimension = 3
 ```
 
@@ -68,7 +68,7 @@ For 2D fan beam:
 
 ```toml
 specifies = "geometry"
-kind = "fan-beam"
+type = "fan-beam"
 dimension = 2
 ```
 
