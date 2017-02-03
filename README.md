@@ -10,20 +10,28 @@ specifies = "geometry"
 type = "parallel"
 dimension = 3
 
-[volume]
-origin = [0.0, 0.0, 0.0]
-lengths = [10.0, 10.0, 10.0]
-shape = [100, 100, 100]
-
 [parameters]
 source-distance = 5.0
 detector-distance = 5.0
 projection-count = 10
 # angles: [0, 0.5, 1.0, ...]
 # ...
+
+# optional
+[volume]
+origin = [0.0, 0.0, 0.0]
+lengths = [10.0, 10.0, 10.0]
+shape = [100, 100, 100]
+
+# optional
+[experiment]
+unit-length = 1.0 # the physical coordinates are given in meters
+source-voltage = 1.0
+power = 1.0
+filter-material = 1.0
 ```
 
-The geometry specs have the following structure: first there is a *header*, then the *volume* is defined, and finally the *parameters* for the geometry are given.
+The geometry specs have the following structure: first there is a *header*, the *parameters* for the geometry are given, then (optionally) the *volume* is defined, and finally additional *experimental information* may be given.
 
 ## Header
 
@@ -74,27 +82,9 @@ dimension = 2
 
 etc.
 
-## Volume
-
-After the header, the *volume* table is given. We make a
-
-The table has *three* entries:
-- `origin`: an array of `D` floating point numbers. The left-most point of the volume (in each axis) in physical coordinates.
-- `lengths`: an array of `D` floating point numbers. The size of the volume in physical coordinates.
-
-A valid volume definition is e.g.:
-
-```toml
-[volume]
-origin = [0.0, 0.0, 0.0]
-lengths = [10.0, 10.0, 10.0]
-```
-
-This defines a volume of physical size `10 x 10 x 10`, in the *positive octant* in physical coordinates.
-
 ## Parameters
 
-Next a table of parameters are given. These depend on the geometry and are outlined below
+Next a table of parameters are given. These depend on the geometry and are outlined below.
 
 ### Parallel
 
@@ -109,6 +99,24 @@ The parallel geometry defines a parallel beam setup where the object is rotated 
 - (optional) `angles`: a list of floating point numbers. The rotation angle for each projection.
 
 Either `projection-count` or `angles` have to be given. If they are both given, then the length of `angles` should be equal to `projection-count`. If only `projection-count` is given then the angle list will correspond to an equipartitioning of the interval `[0, pi)`.
+
+## Volume
+
+After the geometry parameters, optionally a *volume* table is given. This defines a bounding box of the object that has been scanned.
+
+The table has *three* entries:
+- `origin`: an array of `D` floating point numbers. The left-most point of the volume (in each axis) in physical coordinates.
+- `lengths`: an array of `D` floating point numbers. The size of the volume in physical coordinates.
+
+A valid volume definition is e.g.:
+
+```toml
+[volume]
+origin = [0.0, 0.0, 0.0]
+lengths = [10.0, 10.0, 10.0]
+```
+
+This defines a volume of physical size `10 x 10 x 10`, in the *positive octant* in physical coordinates.
 
 ## Experiment
 
