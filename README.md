@@ -54,7 +54,7 @@ The geometry specs have the following structure: first there is a *header*, then
     dimension = 3
     ```
 
-The complete header looks like e.g.:
+In what follows, we will refer to the dimension as `D`. The complete header looks like e.g.:
 
 For 3D parallel beam:
 
@@ -81,7 +81,6 @@ After the header, the *volume* table is given. We make a
 The table has *three* entries:
 - `origin`: an array of `D` floating point numbers. The left-most point of the volume (in each axis) in physical coordinates.
 - `lengths`: an array of `D` floating point numbers. The size of the volume in physical coordinates.
-- `shape`: an array of `D` integers. The number of discretization points for each axis.
 
 A valid volume definition is e.g.:
 
@@ -89,10 +88,9 @@ A valid volume definition is e.g.:
 [volume]
 origin = [0.0, 0.0, 0.0]
 lengths = [10.0, 10.0, 10.0]
-shape = [100, 100, 100]
 ```
 
-This defines a volume of physical size `10 x 10 x 10`, in the *positive octant* in physical coordinates, that consists of `100^3` discretization points.
+This defines a volume of physical size `10 x 10 x 10`, in the *positive octant* in physical coordinates.
 
 ## Parameters
 
@@ -103,9 +101,23 @@ Next a table of parameters are given. These depend on the geometry and are outli
 The parallel geometry defines a parallel beam setup where the object is rotated along the physical z-axis.
 
 - `source-position`: an array of `D` floating point numbers. The position of the source in physical coordinates.
-- `detector-position`: an array of `D` floating point numbers. The position of the detector in physical coordinates.
+- `detector-position`: an array of `D` floating point numbers. The position of the center of the detector in physical coordinates.
 - `detector-tilt`: an array of two arrays of `D` floating point numbers. The (initial axes) of the detector.
+- `detector-size`: an array of `D - 1` floating point numbers. The physical size of the detector.
+- `detector-shape`: an array of `D - 1` integers. The number of pixels on the detector.
 - (optional) `projection-count`: an integer. The number of projections.
 - (optional) `angles`: a list of floating point numbers. The rotation angle for each projection.
 
 Either `projection-count` or `angles` have to be given. If they are both given, then the length of `angles` should be equal to `projection-count`. If only `projection-count` is given then the angle list will correspond to an equipartitioning of the interval `[0, pi)`.
+
+## Experiment
+
+Finally, an optional table that describes the experimental setup is given. Here, the values are in SI units. E.g.:
+
+```toml
+[experiment]
+unit-length = 1.0 # the physical coordinates are given in meters
+source-voltage = 1.0
+power = 1.0
+filter-material = 1.0
+```
