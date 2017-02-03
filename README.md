@@ -19,9 +19,8 @@ projection-count = 10
 
 # optional
 [volume]
-origin = [0.0, 0.0, 0.0]
-lengths = [10.0, 10.0, 10.0]
-shape = [100, 100, 100]
+min-point = [0.0, 0.0, 0.0]
+max-point = [10.0, 10.0, 10.0]
 
 # optional
 [experiment]
@@ -104,16 +103,20 @@ Either `projection-count` or `angles` have to be given. If they are both given, 
 
 After the geometry parameters, optionally a *volume* table is given. This defines a bounding box of the object that has been scanned.
 
-The table has *three* entries:
-- `origin`: an array of `D` floating point numbers. The left-most point of the volume (in each axis) in physical coordinates.
-- `lengths`: an array of `D` floating point numbers. The size of the volume in physical coordinates.
+The table has *two* entries:
+- `min-point`: an array of `D` floating point numbers. The minimum point in physical coordinates.
+- `max-point`: an array of `D` floating point numbers. The maximum point in physical coordinates.
+
+Say `min-point` is equal to `(x_1, y_1, z_1)` and `max-point` is equal to `(x_2, y_2, z_2)`. Then:
+- we require `x_2 > x_1`, `y_2 > y_1`, `z_2 > z_1`
+- the bounding box fo the volume is `[x_1, x_2] x [y_1, y_2] x [z_1, z_2]`.
 
 A valid volume definition is e.g.:
 
 ```toml
 [volume]
-origin = [0.0, 0.0, 0.0]
-lengths = [10.0, 10.0, 10.0]
+min-point = [0.0, 0.0, 0.0]
+max-point = [10.0, 10.0, 10.0]
 ```
 
 This defines a volume of physical size `10 x 10 x 10`, in the *positive octant* in physical coordinates.
