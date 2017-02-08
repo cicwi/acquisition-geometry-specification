@@ -109,7 +109,7 @@ The following parameters are used by multiple geometries:
 ### Parallel
 
 <p align="center">
-<img src="images/parallel.png" />
+<img src="images/parallel.png" width="600px" />
 </p>
 
 The parallel geometry defines a parallel beam setup where the object is rotated along the physical z-axis.
@@ -120,7 +120,7 @@ The parallel geometry defines a parallel beam setup where the object is rotated 
 
 
 <p align="center">
-<img src="images/cone-beam.png" />
+<img src="images/cone-beam.png" width="600px" />
 </p>
 
 The cone-beam geometry defines a parallel beam setup where the object is rotated along the physical z-axis.
