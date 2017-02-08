@@ -9,10 +9,14 @@ We specify acquisition geometries using a [TOML](https://github.com/toml-lang/to
 specifies = "geometry"
 type = "parallel"
 dimension = 3
+projection-file-pattern = "projection-*.tiff"
 
 [parameters]
-source-distance = 5.0
-detector-distance = 5.0
+source-position = [-10.0, 5.0, 5.0]
+detector-position = [20.0, 5.0, 5.0]
+detector-tilt = [[0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
+detector-size = [10.0, 10.0]
+detector-shape = [256, 256]
 projection-count = 10
 # angles: [0, 0.5, 1.0, ...]
 # ...
@@ -34,13 +38,13 @@ The geometry specs have the following structure: first there is a *header*, the 
 
 ## Header
 
-- First it is specified that the file is a geometry specification, to distinguish it from other specifications:
+- It is specified that the file is a geometry specification, to distinguish it from other specifications:
 
     ```toml
     specifies = "geometry"
     ```
 
-- In the second entry the *type* (or *class*) of the geometry as:
+- The *type* (or *class*) of the geometry is specified as:
 
     ```toml
     class = "name"
@@ -55,10 +59,16 @@ The geometry specs have the following structure: first there is a *header*, the 
     - `tomosynthesis`
     - `trajectory`
 
-- Finally the problem dimension is given as:
+- The problem dimension is given as:
 
     ```toml
     dimension = 3
+    ```
+
+- The pattern for the projection file names is given, e.g.:
+
+    ```toml
+    projection-file-pattern = "projection-*.tiff"
     ```
 
 In what follows, we will refer to the dimension as `D`. The complete header looks like e.g.:
@@ -85,19 +95,30 @@ etc.
 
 Next a table of parameters are given. These depend on the geometry and are outlined below.
 
+### General
+
+The following parameters are used by multiple geometries:
+
+- `source-position`: an array of `D` floating point numbers. The (initial) position of the source in physical coordinates.
+- `detector-position`: an array of `D` floating point numbers. The  (initial) position of the center of the detector in physical coordinates.
+- `detector-tilt`: an array of two arrays of `D` floating point numbers. The (initial) axes of the detector.
+- `detector-size`: an array of `D - 1` floating point numbers. The physical size of the detector.
+- `detector-shape`: an array of `D - 1` integers. The number of pixels on the detector.
+- `projection-count`: an integer. The number of projections.
+
 ### Parallel
+
+<p align="center">
+<img src="images/parallel.png" />
+</p>
 
 The parallel geometry defines a parallel beam setup where the object is rotated along the physical z-axis.
 
-- `source-position`: an array of `D` floating point numbers. The position of the source in physical coordinates.
-- `detector-position`: an array of `D` floating point numbers. The position of the center of the detector in physical coordinates.
-- `detector-tilt`: an array of two arrays of `D` floating point numbers. The (initial axes) of the detector.
-- `detector-size`: an array of `D - 1` floating point numbers. The physical size of the detector.
-- `detector-shape`: an array of `D - 1` integers. The number of pixels on the detector.
-- (optional) `projection-count`: an integer. The number of projections.
-- (optional) `angles`: a list of floating point numbers. The rotation angle for each projection.
+- (optional) `angles`: a explicit list of floating point numbers. The rotation angle for each projection. If `angles` is not defined, then it is assumed to be a list of equidistant angles in the interval `[0, pi)`.
 
-Either `projection-count` or `angles` have to be given. If they are both given, then the length of `angles` should be equal to `projection-count`. If only `projection-count` is given then the angle list will correspond to an equipartitioning of the interval `[0, pi)`.
+### Cone-beam
+
+The cone-beam geometry defines a parallel beam setup where the object is rotated along the physical z-axis.
 
 ## Volume
 
