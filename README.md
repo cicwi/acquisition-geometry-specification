@@ -118,6 +118,11 @@ The parallel geometry defines a parallel beam setup where the object is rotated 
 
 ### Cone-beam
 
+
+<p align="center">
+<img src="images/cone-beam.png" />
+</p>
+
 The cone-beam geometry defines a parallel beam setup where the object is rotated along the physical z-axis.
 
 ## Volume
